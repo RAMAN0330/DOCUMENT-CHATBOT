@@ -14,8 +14,8 @@ from langchain.prompts import PromptTemplate
 from dotenv import load_dotenv
 
 load_dotenv()
-os.getenv("AIzaSyBzIZFqiM75Jx3bKNDM_eK4WL6XVlt9XeY")
-genai.configure(api_key=os.getenv("AIzaSyBzIZFqiM75Jx3bKNDM_eK4WL6XVlt9XeY"))
+os.getenv("API")
+genai.configure(api_key=os.getenv("API"))
 
 # read all pdf and docx files and return text
 
@@ -47,7 +47,7 @@ def get_vector_store(chunks):
         return
     embeddings = GoogleGenerativeAIEmbeddings(
         model="models/embedding-001",
-        google_api_key="AIzaSyBzIZFqiM75Jx3bKNDM_eK4WL6XVlt9XeY")  # type: ignore
+        google_api_key="API")  # type: ignore
     vector_store = FAISS.from_texts(chunks, embedding=embeddings)
     vector_store.save_local("faiss_index")
 
@@ -72,7 +72,7 @@ def get_conversational_chain():
     model = ChatGoogleGenerativeAI(model="gemini-pro",
                                    client=genai,
                                    temperature=0.3,
-                                   google_api_key="AIzaSyBzIZFqiM75Jx3bKNDM_eK4WL6XVlt9XeY"
+                                   google_api_key="API"
                                    )
     prompt = PromptTemplate(template=prompt_template,
                             input_variables=["context", "question"])
@@ -86,7 +86,7 @@ def clear_chat_history():
 def user_input(user_question):
     embeddings = GoogleGenerativeAIEmbeddings(
         model="models/embedding-001",
-        google_api_key="AIzaSyBzIZFqiM75Jx3bKNDM_eK4WL6XVlt9XeY")  # type: ignore
+        google_api_key="API")  # type: ignore
 
     new_db = FAISS.load_local("faiss_index", embeddings )
     #allow_dangerous_deserialization=True
