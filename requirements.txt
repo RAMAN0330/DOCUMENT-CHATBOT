@@ -3,3 +3,6 @@ python-docx
 streamlit
 langchain
 langchain-google-genai
+google-generativeai
+faiss-gpu 
+python-dotenv
